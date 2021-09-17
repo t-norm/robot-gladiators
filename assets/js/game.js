@@ -60,6 +60,15 @@ var startGame = function() {
             var pickedEnemyName = enemyNames[i];
             enemyHealth = 50;
             fight(pickedEnemyName);
+
+            if (playerHealth > 0 && i < enemyNames.length - 1) {
+                var storeConfirm = window.confirm("The fight is over, do you want to visit the store before the next round?");
+            
+                if (storeConfirm) {
+                    shop();
+                }
+            }
+
         }
     }
 
@@ -81,5 +90,45 @@ var endGame = function () {
         window.alert("Thanks for playing!");
     }
 }
+
+var shop = function () {
+    var shopOptionPrompt =window.prompt(
+        "Would you like to REFILL your health (+20 for 7 gold), UPGRADE your attack power (+6 for 7 gold), or LEAVE the store? Please type: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
+    );
+
+    switch (shopOptionPrompt) {
+        case "REFILL":
+        case "refill":
+            if (playerGold >= 7) {
+                window.alert("Refilling health by 20 points for 7 gold.");
+                playerHealth = playerHealth + 20;
+                playerGold = playerGold - 7;
+            }else {
+                window.alert("You don't have enough gold.");
+            }
+            break;
+
+        case "UPGRADE":
+        case "upgrade":
+            if (playerGold >= 7) {
+                window.alert("Upgrading attack power by 6 for 7 gold.");
+                playerAttack = playerAttack + 6;
+                playerGold = playerGold - 7;
+            }else {
+                window.alert("You don't have enough gold.");
+            }
+          break;
+
+        case "LEAVE":
+        case "leave":
+            window.alert("Leaving the store.");
+            break;
+
+        default:
+            window.alert("You did not pick a valid option. Try again.");
+            shop();
+            break;
+      }
+};
 
 startGame();
