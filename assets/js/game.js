@@ -1,63 +1,59 @@
-// player naming and initial stats
-var playerName = window.prompt("Name your gladiator robot:");
+var playerName = window.prompt("Name your robot:");
 var playerHealth = 100;
 var playerAttack = 10;
 var playerGold = 10;
 
-console.log(playerName, playerAttack, playerHealth);
-
-// enemy stats
-var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"];
+var enemyNames = ['Roborto', 'Amy Android', 'Robo Trumble'];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
 var fight = function(enemyName) {
-    window.alert("Welcome to Robot Gladiators!");
+    while (playerHealth > 0 && enemyHealth > 0) {
+        var promptFight = window.prompt('Will you FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
 
-    var promptFight = window.prompt('Will you FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose:');
+        if (promptFight === "skip" || promptFight === "SKIP" || promptFight === "Skip") {
+            var confirmSkip = window.confirm("If you skip this fight, you'll lose 10 gold. Are you sure?");
+        
+            if (confirmSkip) {
+                window.alert("The crowd boos ferociously. " + playerName + ' has decided to skip the round.');
+                playerGold = playerGold - 10;
+                console.log("playerGold", playerGold);
+                break;
+            }
+        }
 
-    if (promptFight === "fight" || promptFight === "FIGHT" || promptFight === "Fight") {
-        //player attacks enemy
         enemyHealth = enemyHealth - playerAttack;
         console.log(
-            playerName + " attacked " + enemyName + ". " + enemyName + " has " + enemyHealth + " health."
+            playerName + ' attacked ' + enemyName + '. ' + enemyName + ' has ' + enemyHealth + ' health.'
         );
 
-        // check enemy health
         if (enemyHealth <= 0) {
-            window.alert("Encore! " + enemyName + " was slain!");
+            window.alert("Encore! " + enemyName + ' was slain!');
+            playerGold = playerGold + 20;
+            break;
         } else {
-            window.alert(enemyName + " has " + enemyHealth + " health.");
+            window.alert(enemyName + ' has ' + enemyHealth + ' health.');
         }
 
-        // enemy attacks player
         playerHealth = playerHealth - enemyAttack;
         console.log(
-            enemyName + " attacked " + playerName + ". " + playerName + " has " + playerHealth + " health."
+            enemyName + ' attacked ' + playerName + '. ' + playerName + ' has ' + playerHealth + ' health.'
         );
 
-        // check player health
         if (playerHealth <= 0) {
-            window.alert("Game over! " + playerName + " has died!");
+            window.alert(playerName + ' has died!');
+            break;
         } else {
-            window.alert(playerName + " has " + playerHealth + " health.");
+        window.alert(playerName + ' has ' + playerHealth + ' health.');
         }
-
-    } else if (promptFight === "skip" || promptFight === "SKIP" || promptFight === "Skip") {
-        var confirmSkip = window.confirm("If you skip this fight, you'll lose 2 gold. Are you sure you?");
-
-        if (confirmSkip) {
-            window.alert(playerName + " has decided to skip this fight.");
-            playerMoney = playerMoney - 2;
-        }else {
-            fight();
-        }
-
-    } else {
-        window.alert("Please type a valid option. Try again.");
     }
 };
 
-for(var i = 0; i < enemyNames.length; i++){
-    fight(enemyNames[i])
+for (var i = 0; i < enemyNames.length; i++) {
+    if (playerHealth > 0) {
+        window.alert('Welcome to Robot Gladiators! Round ' + (i + 1));
+        var pickedEnemyName = enemyNames[i];
+        enemyHealth = 50;
+        fight(pickedEnemyName);
+    }
 }
