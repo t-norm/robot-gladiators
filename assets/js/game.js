@@ -49,11 +49,37 @@ var fight = function(enemyName) {
     }
 };
 
-for (var i = 0; i < enemyNames.length; i++) {
+var startGame = function() {
+    playerHealth = 100;
+    playerAttack = 10;
+    playerGold = 10;
+
+    for (var i = 0; i < enemyNames.length; i++) {
+        if (playerHealth > 0) {
+            window.alert('Welcome to Robot Gladiators! Round ' + (i + 1));
+            var pickedEnemyName = enemyNames[i];
+            enemyHealth = 50;
+            fight(pickedEnemyName);
+        }
+    }
+
+    endGame();
+}
+
+var endGame = function () {
     if (playerHealth > 0) {
-        window.alert('Welcome to Robot Gladiators! Round ' + (i + 1));
-        var pickedEnemyName = enemyNames[i];
-        enemyHealth = 50;
-        fight(pickedEnemyName);
+        window.alert("Well fought! You survived the arena with " + playerGold + " gold.");
+    }else {
+        window.alert("Game over! The crowd was not pleased...");
+    }
+
+    var playAgainConfirm = window.confirm("Play again?");
+
+    if (playAgainConfirm) {
+        startGame();
+    }else {
+        window.alert("Thanks for playing!");
     }
 }
+
+startGame();
