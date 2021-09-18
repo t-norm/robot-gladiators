@@ -93,33 +93,36 @@ var endGame = function () {
 
 var shop = function () {
     var shopOptionPrompt =window.prompt(
-        "Would you like to REFILL your health (+20 for 7 gold), UPGRADE your attack power (+6 for 7 gold), or LEAVE the store? Please type: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
+        "Would you like to REFILL your health (+20 for 7 gold), UPGRADE your attack power (+6 for 7 gold), or LEAVE the store? Please type: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice. " + playerName + "'s Stats: Health: " + playerHealth + " | Attack Power: " + playerAttack + " | Gold: " + playerGold + "."
     );
 
     switch (shopOptionPrompt) {
         case "REFILL":
+        case "Refill":
         case "refill":
             if (playerGold >= 7) {
-                window.alert("Refilling health by 20 points for 7 gold.");
                 playerHealth = playerHealth + 20;
                 playerGold = playerGold - 7;
+                window.alert("Refilling health by 20 points for 7 gold. " + playerName + "'s Stats: Health: " + playerHealth + " | Attack Power: " + playerAttack + " | Gold: " + playerGold + ".");
             }else {
                 window.alert("You don't have enough gold.");
             }
             break;
 
         case "UPGRADE":
+        case "Upgrade":
         case "upgrade":
             if (playerGold >= 7) {
-                window.alert("Upgrading attack power by 6 for 7 gold.");
                 playerAttack = playerAttack + 6;
                 playerGold = playerGold - 7;
+                window.alert("Upgrading attack power by 6 for 7 gold. " + playerName + "'s Stats: Health: " + playerHealth + " | Attack Power: " + playerAttack + " | Gold: " + playerGold + ".");
             }else {
                 window.alert("You don't have enough gold.");
             }
           break;
 
         case "LEAVE":
+        case "Leave":
         case "leave":
             window.alert("Leaving the store.");
             break;
@@ -128,7 +131,9 @@ var shop = function () {
             window.alert("You did not pick a valid option. Try again.");
             shop();
             break;
-      }
+    }
+
+    var
 };
 
 startGame();
