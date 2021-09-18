@@ -132,8 +132,6 @@ var shop = function () {
             shop();
             break;
     }
-
-    var
 };
 
 startGame();
