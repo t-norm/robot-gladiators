@@ -107,7 +107,7 @@ var shop = function () {
         case "LEAVE":
         case "Leave":
         case "leave":
-            window.alert("Fight well and die hard " + playerInfo.name + ".");
+            window.alert("Fight well and die hard, " + playerInfo.name + ".");
             break;
 
         default:
