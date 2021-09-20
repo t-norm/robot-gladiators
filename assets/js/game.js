@@ -1,51 +1,74 @@
+var fightOrSkip = function() {
+    var promptFight = window.prompt('Would you like to FIGHT or SKIP this round? Enter "FIGHT" or "SKIP" to choose.');
+  
+    if (promptFight === "" || promptFight === null) {
+      window.alert("I didn't understand you. Try again.");
+      return fightOrSkip();
+    }
+  
+    promptFight = promptFight.toLowerCase();
+  
+    if (promptFight === "skip") {
+      var confirmSkip = window.confirm("Are you sure you want to skip this round? You will lose 10 gold.");
+  
+        if (confirmSkip) {
+            window.alert("The crowd boos ferociously. "  + playerInfo.name + " has decided to skip this fight.");
+            playerInfo.gold = Math.max(0, playerInfo.gold - 10);
+            return true;
+        }
+    }
+    return false;
+};
+  
 var fight = function(enemy) {
-    while (playerInfo.health > 0 && enemy.health > 0) {
-        var promptFight = window.prompt('Will you FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
 
-        if (promptFight === "skip" || promptFight === "SKIP" || promptFight === "Skip") {
-            var confirmSkip = window.confirm("If you skip this fight, you'll lose 10 gold. Are you sure?");
-        
-            if (confirmSkip) {
-                window.alert("The crowd boos ferociously. " + playerInfo.name + ' has decided to skip the round.');
-                playerInfo.gold = Math.max(0, playerInfo.gold - 10)
-                console.log("playerInfo.gold", playerInfo.gold);
+    var isPlayerTurn = true;
+  
+    if (Math.random() > 0.5) {
+      isPlayerTurn = false;
+    }
+  
+    while (playerInfo.health > 0 && enemy.health > 0) {
+
+        if (isPlayerTurn) {
+
+            if (fightOrSkip()) {
                 break;
             }
+  
+            var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
+            enemy.health = Math.max(0, enemy.health - damage);
+        
+            if (enemy.health <= 0) {
+                window.alert("Encore! " + enemy.name + " was slain!");
+                playerInfo.gold = playerInfo.gold + 20;
+                break;
+            }else {
+                window.alert(enemy.name + " has " + enemy.health + " health.");
+            }
+
+        }else {
+            var damage = randomNumber(enemy.attack - 3, enemy.attack);
+            playerInfo.health = Math.max(0, playerInfo.health - damage);
+
+            if (playerInfo.health <= 0) {
+                window.alert("Game over! " + playerInfo.name + " has died!");
+                break;
+            }else {
+                window.alert(playerInfo.name + " has " + playerInfo.health + " health.");
+            }
         }
-
-        var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
-        enemy.health = Math.max(0, enemy.health - damage);
-
-        console.log(
-            playerInfo.name + ' attacked ' + enemy.name + '. ' + enemy.name + ' has ' + enemy.health + ' health.'
-        );
-
-        if (enemy.health <= 0) {
-            window.alert("Encore! " + enemy.name + ' was slain!');
-            playerInfo.gold = playerInfo.gold + 20;
-            break;
-        } else {
-            window.alert(enemy.name + ' has ' + enemy.health + ' health.');
-        }
-
-        var damage = randomNumber(enemy.attack - 3, enemy.attack);
-        playerInfo.health = Math.max(0, playerInfo.health - damage);
-
-        console.log(
-            enemy.name + ' attacked ' + playerInfo.name + '. ' + playerInfo.name + ' has ' + playerInfo.health + ' health.'
-        );
-
-        if (playerInfo.health <= 0) {
-            window.alert(playerInfo.name + ' has died!');
-            break;
-        } else {
-        window.alert(playerInfo.name + ' has ' + playerInfo.health + ' health.');
-        }
+        isPlayerTurn = !isPlayerTurn;
     }
 };
 
 var startGame = function() {
     playerInfo.reset();
+
+    if (playerInfo.name === "" || playerInfo.name === null) {
+        window.alert("I didn't understand you, so I'll just assume you typed 'DumBot'.")
+        playerInfo.name = "DumBot"
+    }
 
     for (var i = 0; i < enemyInfo.length; i++) {
         if (playerInfo.health > 0) {
