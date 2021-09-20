@@ -84,7 +84,6 @@ var startGame = function() {
                     shop();
                 }
             }
-
         }
     }
 
@@ -109,27 +108,23 @@ var endGame = function () {
 
 var shop = function () {
     var shopOptionPrompt =window.prompt(
-        "Would you like to REFILL your health (+20 for 7 gold), UPGRADE your attack power (+6 for 7 gold), or LEAVE the store? Please type: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice. " + playerInfo.name + "'s Stats: Health: " + playerInfo.health + " | Attack Power: " + playerInfo.attack + " | Gold: " + playerInfo.gold + "."
+        "Would you like to REFILL your health (+20 for 7 gold), UPGRADE your attack power (+6 for 7 gold), or LEAVE the store? Please type '1' for REFILL, '2' UPGRADE, or '3' to LEAVE. " + playerInfo.name + "'s Stats: Health: " + playerInfo.health + " | Attack Power: " + playerInfo.attack + " | Gold: " + playerInfo.gold + "."
     );
 
+    shopOptionPrompt = parseInt(shopOptionPrompt);
+
     switch (shopOptionPrompt) {
-        case "REFILL":
-        case "Refill":
-        case "refill":
+        case 1:
             playerInfo.refillHealth();
             shop();
             break;
 
-        case "UPGRADE":
-        case "Upgrade":
-        case "upgrade":
+        case 2:
             playerInfo.upgradeAttack();
             shop();
-          break;
+            break;
 
-        case "LEAVE":
-        case "Leave":
-        case "leave":
+        case 3:
             window.alert("Fight well and die hard, " + playerInfo.name + ".");
             break;
 
@@ -162,9 +157,9 @@ var playerInfo = {
     attack: 10,
     gold: 10,
     reset: function() {
-      this.health = 100;
-      this.gold = 10;
-      this.attack = 10;
+        this.health = 100;
+        this.gold = 10;
+        this.attack = 10;
     },
     refillHealth: function() {
         if (this.gold >= 7) {
@@ -173,6 +168,7 @@ var playerInfo = {
             this.gold -= 7;
         }else {
             window.alert("You don't have enough gold!");
+            shop();
         }
     },
     upgradeAttack: function() {
@@ -182,6 +178,7 @@ var playerInfo = {
             this.gold -= 7;
         }else {
             window.alert("You don't have enough gold!");
+            shop();
         }
     }
 };
