@@ -52,7 +52,7 @@ var fight = function(enemy) {
             playerInfo.health = Math.max(0, playerInfo.health - damage);
 
             if (playerInfo.health <= 0) {
-                window.alert("Game over! " + playerInfo.name + " has died!");
+                window.alert(playerInfo.name + " has died!");
                 break;
             }else {
                 window.alert(playerInfo.name + " has " + playerInfo.health + " health.");
@@ -90,21 +90,33 @@ var startGame = function() {
     endGame();
 }
 
-var endGame = function () {
-    if (playerInfo.health > 0) {
-        window.alert("Well fought! You survived the arena with " + playerInfo.gold + " gold.");
-    }else {
-        window.alert("Game over! The crowd was not pleased...");
+var endGame = function() {
+    window.alert("The game has now ended. Let's see how you did!");
+  
+    var highScore = localStorage.getItem("highscore");
+    if (highScore === null) {
+      highScore = 0;
     }
 
+    if (playerInfo.gold > highScore) {
+      localStorage.setItem("highscore", playerInfo.gold);
+      localStorage.setItem("name", playerInfo.name);
+  
+      alert(playerInfo.name + " has a high score of " + playerInfo.gold + "!");
+    } 
+    else {
+      alert(playerInfo.name + " did not beat the high score of " + highScore + ".");
+    }
+  
     var playAgainConfirm = window.confirm("Play again?");
-
+  
     if (playAgainConfirm) {
-        startGame();
-    }else {
-        window.alert("Thanks for playing!");
+      startGame();
+    } 
+    else {
+      window.alert("Thanks for playing!");
     }
-}
+};
 
 var shop = function () {
     var shopOptionPrompt =window.prompt(
